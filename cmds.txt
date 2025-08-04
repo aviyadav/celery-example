@@ -1,0 +1,20 @@
+uv venv && uv init .
+uv add celery redis
+
+docker compose up -d
+
+[terminal 1]
+celery -A tasks worker -l info
+
+[terminal 2]
+python -i tasks.py
+>>> result = process.AsyncResult("ab5200f8-9f20-473b-a962-a73bfd8d0a86")
+>>> result.ready()
+True
+>>> result.status
+'SUCCESS'
+>>> result.get()
+100
+
+[redis-commander]
+http://localhost:8081/
